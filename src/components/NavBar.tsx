@@ -21,11 +21,11 @@ interface navLinkStyles {
 const NavBar = () => {
 
 
-    const navLinkStyles = (props: navLinkStyles) => {
+    const navLinkStyles = ({ isActive }: navLinkStyles) => {
         return {
-            textDecoration: props.isActive ? 'none' : 'underlined',
-            fontWeight: props.isActive ? 'bold' : 'normal',
-            color: props.isActive ? 'red' : 'green'
+            textDecoration: isActive ? 'none' : 'underlined',
+            fontWeight: isActive ? 'bold' : 'normal',
+            color: isActive ? 'red' : 'green'
         }
     }
     return (
