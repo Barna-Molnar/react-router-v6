@@ -1,14 +1,35 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
+import styled from 'styled-components';
+
+const DIV = styled.div`
+    a {
+        margin: 10px ;
+    }
+`;
+const users = [
+    {
+        name: "User 1",
+        id: '1'
+    },
+    {
+        name: "User 2",
+        id: '2'
+    },
+    {
+        name: "User 3",
+        id: '3'
+    }
+]
+
 
 const Users = () => {
     return (
-        <div>
-            <h2>User1</h2>
-            <h2>User2</h2>
-            <h2>User3</h2>
+        <DIV>
+            {users.map((user) => (
+                <Link to={user.id}>{user.name}</Link>
+            ))}
             <Outlet />
-        </div>
+        </DIV>
     )
 }
 
