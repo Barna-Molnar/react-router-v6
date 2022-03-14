@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Home from './components/Home';
 import About from './components/About';
@@ -11,6 +12,7 @@ import NewProducts from './components/NewProducts';
 import Users from './components/Users';
 import UserDetail from './components/UserDetail';
 import Admin from './components/Admin';
+const LazyAbout = React.lazy(() => import('./components/About'))
 
 const App = () => {
   return (
@@ -18,7 +20,12 @@ const App = () => {
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/about' element={<About />} />
+        {/* <Route path='/about' element={<About />} /> */}
+        <Route path='/about' element={
+          <React.Suspense fallback='Loading...'>
+            <LazyAbout />
+          </React.Suspense>
+        } />
         <Route path='order-summary' element={<OrderSummary />} />
         <Route path='products' element={<Products />} >
           <Route index element={<FeaturedProducts />} />
