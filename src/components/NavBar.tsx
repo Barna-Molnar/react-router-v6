@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom"
 import styled from 'styled-components'
+import AppContext from "./AppContext";
 
 const NAV = styled.nav`
     background-color: aliceblue;
@@ -19,7 +21,7 @@ interface navLinkStyles {
 }
 
 const NavBar = () => {
-
+    const context = useContext(AppContext);
 
     const navLinkStyles = ({ isActive }: navLinkStyles) => {
         return {
@@ -33,6 +35,13 @@ const NavBar = () => {
             <NavLink to='/' style={navLinkStyles}>Home</NavLink>
             <NavLink to='/about' style={navLinkStyles}>About</NavLink>
             <NavLink to='/products' style={navLinkStyles}>Products</NavLink>
+            <NavLink to='/profile' style={navLinkStyles}>Profile</NavLink>
+            {
+                context.user ? (
+
+                    <div>Welcome back: {context.user?.userName}!</div>
+                ) : <div>You are not logged in!</div>
+            }
         </NAV>
     )
 }

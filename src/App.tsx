@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react'
+import React, { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Home from './components/Home';
 import About from './components/About';
@@ -12,14 +12,29 @@ import NewProducts from './components/NewProducts';
 import Users from './components/Users';
 import UserDetail from './components/UserDetail';
 import Admin from './components/Admin';
+import Profile from './components/Profile';
+import AppContext, { IAppContext, User } from './components/AppContext';
 const LazyAbout = React.lazy(() => import('./components/About'))
 
 const App = () => {
+
+  const [appContext, setAppContext] = useState<IAppContext>({
+    user: undefined
+  });
+
+  const setUser = (user: User | undefined) => {
+    setAppContext({
+      ...appContext,
+      user
+    });
+
+  };
+
   return (
-    <>
+    <AppContext.Provider value={appContext}>
       <NavBar />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home setUser={setUser} />} />
         {/* <Route path='/about' element={<About />} /> */}
         <Route path='/about' element={
           <React.Suspense fallback='Loading...'>
@@ -36,9 +51,10 @@ const App = () => {
           <Route path=':userId' element={<UserDetail />} />
           <Route path='admin' element={<Admin />} />
         </Route>
+        <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<NoMatch />} />
       </Routes>
-    </>
+    </AppContext.Provider>
   );
 }
 
